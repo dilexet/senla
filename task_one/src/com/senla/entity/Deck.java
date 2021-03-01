@@ -13,4 +13,10 @@ public class Deck {
     public ArrayList<Container> getContainers() {
         return containers;
     }
+
+    // TODO: реализовать
+    @Override
+    public String toString(){
+        return "";
+    }
 }

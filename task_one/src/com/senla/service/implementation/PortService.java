@@ -1,11 +1,12 @@
-package com.senla.service;
+package com.senla.service.implementation;
 
 import com.senla.entity.Port;
 import com.senla.entity.Ship;
+import com.senla.service.IPortService;
 
 import java.util.Collection;
 
-public class PortService {
+public class PortService implements IPortService {
 
     public Collection<Ship> getShips(Port port) {
         return port.getShips();

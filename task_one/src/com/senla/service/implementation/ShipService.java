@@ -1,11 +1,12 @@
-package com.senla.service;
+package com.senla.service.implementation;
 
 import com.senla.entity.Container;
 import com.senla.entity.Deck;
 import com.senla.entity.Ship;
 import com.senla.enums.ContainerSize;
+import com.senla.service.IShipService;
 
-public class ShipService {
+public class ShipService implements IShipService {
 
     public Ship createShip() {
         return new Ship();

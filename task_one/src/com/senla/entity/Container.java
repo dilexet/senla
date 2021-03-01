@@ -23,4 +23,10 @@ public class Container {
     public void setLitersOfWater(float litersOfWater) {
         this.litersOfWater = litersOfWater;
     }
+
+    // TODO: реализовать
+    @Override
+    public String toString(){
+        return "";
+    }
 }

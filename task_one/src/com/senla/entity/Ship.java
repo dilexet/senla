@@ -1,7 +1,5 @@
 package com.senla.entity;
 
-import java.util.Random;
-
 public class Ship {
 
     private static int count = 0;
@@ -10,7 +8,6 @@ public class Ship {
     private final Deck deckTwo;
 
     public Ship() {
-        Random random = new Random();
         count++;
         id = count;
         deckOne = new Deck();
@@ -27,5 +24,11 @@ public class Ship {
 
     public Deck getDeckOne() {
         return deckOne;
+    }
+
+    // TODO: реализовать
+    @Override
+    public String toString(){
+        return "";
     }
 }

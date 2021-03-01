@@ -1,9 +1,10 @@
-package com.senla.service;
+package com.senla.service.implementation;
 
 import com.senla.entity.Container;
 import com.senla.enums.ContainerSize;
+import com.senla.service.IContainerService;
 
-public class ContainerService {
+public class ContainerService implements IContainerService {
 
     public Container createContainer(ContainerSize containerSize) {
         return new Container(containerSize);

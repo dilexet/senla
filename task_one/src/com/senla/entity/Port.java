@@ -1,7 +1,6 @@
 package com.senla.entity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Port {
     private final ArrayList<Ship> ships;
@@ -28,5 +27,11 @@ public class Port {
 
     public ArrayList<Ship> getShips() {
         return ships;
+    }
+
+    // TODO: реализовать
+    @Override
+    public String toString(){
+        return "";
     }
 }
