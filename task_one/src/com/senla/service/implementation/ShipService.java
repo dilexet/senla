@@ -57,7 +57,7 @@ public class ShipService implements IShipService {
     }
 
     private boolean chekFreeSpace(Deck deck) {
-        return deck.getContainers().stream().filter(s -> s.getContainerSize() == ContainerSize.Big).count() < 1 &&
-                deck.getContainers().stream().filter(s -> s.getContainerSize() == ContainerSize.Small).count() < 2;
+        return deck.getContainers().stream().filter(s -> s.getContainerSize() == ContainerSize.BIG).count() < 1 &&
+                deck.getContainers().stream().filter(s -> s.getContainerSize() == ContainerSize.SMALL).count() < 2;
     }
 }

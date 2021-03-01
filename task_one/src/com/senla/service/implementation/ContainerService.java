@@ -12,7 +12,7 @@ public class ContainerService implements IContainerService {
 
     public void addWater(Container container, float liters) throws Exception {
         switch (container.getContainerSize()) {
-            case Big:
+            case BIG:
                 if (container.getLitersOfWater() >= 1000) {
                     throw new Exception("The container is full");
                 } else {
@@ -23,7 +23,7 @@ public class ContainerService implements IContainerService {
                     }
                 }
                 break;
-            case Small:
+            case SMALL:
                 if (container.getLitersOfWater() >= 450) {
                     throw new Exception("The container is full");
                 } else {

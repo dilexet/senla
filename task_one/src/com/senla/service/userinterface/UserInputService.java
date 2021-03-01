@@ -23,7 +23,7 @@ public class UserInputService {
                 // TODO: добавить в модельку кораблика поле ShipState(busy, free, pending)
                 int id2 = 2;
                 worker.shipInfo(id2);
-                return worker.InformationAboutShipsExpected();
+                return worker.informationAboutShipsExpected();
             case 6:
                 int id3 = 2;
                 return worker.loadShipIntoPort(id3);

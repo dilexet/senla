@@ -2,6 +2,6 @@ package com.senla.enums;
 
 public enum ContainerSize
 {
-    Big,
-    Small
+    BIG,
+    SMALL
 }

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Worker {
+    // TODO: поработать над исключениями
+
     private final Port port;
     private final ArrayList<Ship> allShips;
     private final IPortService portService;
@@ -82,12 +84,12 @@ public class Worker {
             switch (value) {
                 case 0 -> flag = false;
                 case 1 -> {
-                    container = containerService.createContainer(ContainerSize.Big);
+                    container = containerService.createContainer(ContainerSize.BIG);
                     containerService.addWater(container, water);
                     flag = shipService.addContainer(ship, container);
                 }
                 case 2 -> {
-                    container = containerService.createContainer(ContainerSize.Small);
+                    container = containerService.createContainer(ContainerSize.SMALL);
                     containerService.addWater(container, water);
                     flag = shipService.addContainer(ship, container);
                 }
@@ -99,7 +101,7 @@ public class Worker {
     }
 
     // case 5
-    public String InformationAboutShipsExpected() {
+    public String informationAboutShipsExpected() {
         StringBuilder data = new StringBuilder();
         for (var ship : portService.getExpectedShips(port)) {
             data.append(ship.toString());
