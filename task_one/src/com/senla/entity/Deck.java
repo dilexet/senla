@@ -14,9 +14,12 @@ public class Deck {
         return containers;
     }
 
-    // TODO: реализовать
     @Override
-    public String toString(){
-        return "";
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (var container : containers) {
+            stringBuilder.append(container.toString());
+        }
+        return stringBuilder.toString();
     }
 }

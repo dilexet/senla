@@ -24,9 +24,8 @@ public class Container {
         this.litersOfWater = litersOfWater;
     }
 
-    // TODO: реализовать
     @Override
     public String toString(){
-        return "";
+        return "\nContainer size: " + containerSize + ";\n" + "Liters of water: " + litersOfWater + ";\n";
     }
 }

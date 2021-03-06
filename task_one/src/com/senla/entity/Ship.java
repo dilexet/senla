@@ -26,9 +26,9 @@ public class Ship {
         return deckOne;
     }
 
-    // TODO: реализовать
     @Override
     public String toString(){
-        return "";
+        return "\nShip id: " + id + "\nDeck one: \n" + deckOne.toString() +
+                "\nDeck two: \n" + deckTwo.toString();
     }
 }

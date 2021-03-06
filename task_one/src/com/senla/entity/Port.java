@@ -29,9 +29,4 @@ public class Port {
         return ships;
     }
 
-    // TODO: реализовать
-    @Override
-    public String toString(){
-        return "";
-    }
 }
