@@ -24,10 +24,7 @@ public class ShipService implements IShipService {
         } else {
             return false;
         }
-        if(chekFreeSpace(ship.getDeckOne()) || chekFreeSpace(ship.getDeckTwo())){
-            return true;
-        }
-        return false;
+        return chekFreeSpace(ship.getDeckOne()) || chekFreeSpace(ship.getDeckTwo());
     }
 
     public float unloadShip(Ship ship) {
