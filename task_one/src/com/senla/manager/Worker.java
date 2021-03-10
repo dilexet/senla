@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Worker {
-    // TODO: поработать над исключениями
-
     private final Port port;
     private final ArrayList<Ship> allShips;
     private final IPortService portService;
@@ -29,11 +27,11 @@ public class Worker {
         this.containerService = containerService;
     }
 
-    public void addShip(Ship ship) {
+    private void addShip(Ship ship) {
         allShips.add(ship);
     }
 
-    public Ship viewShipById(int id) throws Exception {
+    private Ship viewShipById(int id) throws Exception {
         var ship = allShips.stream().filter(s -> s.getId() == id).findFirst();
         if (ship.isEmpty()) {
             throw new Exception("Ship not found");
@@ -42,13 +40,43 @@ public class Worker {
         }
     }
 
+    public String processCommand(int command) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        switch (command) {
+            case 0:
+                return "Exit";
+            case 1:
+                return waterVolume();
+            case 2:
+                return listShipsInPort();
+            case 3:
+                System.out.println("Введите id корабля: ");
+                int id = scanner.nextInt();
+                return removeShipFromPort(id);
+            case 4:
+                return createShip();
+            case 5:
+                return informationAboutShipsExpected();
+            case 6:
+                System.out.println("Введите id корабля: ");
+                int id3 = scanner.nextInt();
+                return loadShipIntoPort(id3);
+            case 7:
+                System.out.println("Введите id корабля: ");
+                int id2 = scanner.nextInt();
+                return shipInfo(id2);
+            default:
+                throw new Exception("incorrect input");
+        }
+    }
+
     // case 1
-    public String waterVolume() {
+    private String waterVolume() {
         return Double.toString(portService.seeWater(port));
     }
 
     // case 2
-    public String listShipsInPort() {
+    private String listShipsInPort() {
         StringBuilder data = new StringBuilder();
         for (var ship : portService.getShips(port)) {
             data.append(ship.toString());
@@ -57,16 +85,15 @@ public class Worker {
     }
 
     // case 3
-    public String removeShipFromPort(int id) {
+    private String removeShipFromPort(int id) {
         portService.RemoveShip(port, id);
         return "The ship left the port";
     }
 
     // case 4
-    public String createShip() throws Exception {
+    private String createShip() throws Exception {
         var ship = shipService.createShip();
 
-        // TODO: вынести логику ввода/вывода в меню
         boolean flag = true;
         while (flag) {
             System.out.println("""
@@ -101,7 +128,7 @@ public class Worker {
     }
 
     // case 5
-    public String informationAboutShipsExpected() {
+    private String informationAboutShipsExpected() {
         StringBuilder data = new StringBuilder();
         for (var ship : portService.getExpectedShips(port)) {
             data.append(ship.toString());
@@ -109,12 +136,12 @@ public class Worker {
         return data.toString();
     }
 
-    public String shipInfo(int id) throws Exception {
+    private String shipInfo(int id) throws Exception {
         return viewShipById(id).toString();
     }
 
     // case 6
-    public String loadShipIntoPort(int id) throws Exception {
+    private String loadShipIntoPort(int id) throws Exception {
         portService.TakeShip(port, viewShipById(id));
         return "The ship is successfully loaded into the port";
     }
