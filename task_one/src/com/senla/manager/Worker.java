@@ -4,6 +4,7 @@ import com.senla.entity.Container;
 import com.senla.entity.Port;
 import com.senla.entity.Ship;
 import com.senla.enums.ContainerSize;
+import com.senla.enums.ShipState;
 import com.senla.service.IContainerService;
 import com.senla.service.IPortService;
 import com.senla.service.IShipService;
@@ -21,52 +22,34 @@ public class Worker {
     public Worker(Port port, IPortService portService, IShipService shipService, IContainerService containerService) {
         this.port = port;
         allShips = new ArrayList<>();
-
         this.portService = portService;
         this.shipService = shipService;
         this.containerService = containerService;
+    }
+
+    public String processCommand(int command) throws Exception {
+        return switch (command) {
+            case 0 -> "Exit";
+            case 1 -> waterVolume();
+            case 2 -> listShipsInPort();
+            case 3 -> removeShipFromPort();
+            case 4 -> createShip();
+            case 5 -> informationAboutShipsExpected();
+            case 6 -> loadShipIntoPort();
+            default -> throw new Exception("incorrect input");
+        };
     }
 
     private void addShip(Ship ship) {
         allShips.add(ship);
     }
 
-    private Ship viewShipById(int id) throws Exception {
-        var ship = allShips.stream().filter(s -> s.getId() == id).findFirst();
+    private Ship getRandomShip() throws Exception {
+        var ship = allShips.stream().filter(s -> s.getShipState() != ShipState.LOADED).findFirst();
         if (ship.isEmpty()) {
             throw new Exception("Ship not found");
         } else {
             return ship.get();
-        }
-    }
-
-    public String processCommand(int command) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        switch (command) {
-            case 0:
-                return "Exit";
-            case 1:
-                return waterVolume();
-            case 2:
-                return listShipsInPort();
-            case 3:
-                System.out.println("Введите id корабля: ");
-                int id = scanner.nextInt();
-                return removeShipFromPort(id);
-            case 4:
-                return createShip();
-            case 5:
-                return informationAboutShipsExpected();
-            case 6:
-                System.out.println("Введите id корабля: ");
-                int id3 = scanner.nextInt();
-                return loadShipIntoPort(id3);
-            case 7:
-                System.out.println("Введите id корабля: ");
-                int id2 = scanner.nextInt();
-                return shipInfo(id2);
-            default:
-                throw new Exception("incorrect input");
         }
     }
 
@@ -85,8 +68,8 @@ public class Worker {
     }
 
     // case 3
-    private String removeShipFromPort(int id) {
-        portService.RemoveShip(port, id);
+    private String removeShipFromPort() {
+        portService.removeShip(port);
         return "The ship left the port";
     }
 
@@ -104,12 +87,14 @@ public class Worker {
                     """);
             Scanner scanner = new Scanner(System.in);
             var value = scanner.nextInt();
+            if(value == 0){
+                break;
+            }
             System.out.println("Сколько воды будет в контейнере (литры)?");
             var water = scanner.nextFloat();
             // -----------------------------------------------------------------
             Container container;
             switch (value) {
-                case 0 -> flag = false;
                 case 1 -> {
                     container = containerService.createContainer(ContainerSize.BIG);
                     containerService.addWater(container, water);
@@ -124,7 +109,7 @@ public class Worker {
             }
         }
         addShip(ship);
-        return "Ship successfully created";
+        return ship.getName() + " successfully created";
     }
 
     // case 5
@@ -136,13 +121,9 @@ public class Worker {
         return data.toString();
     }
 
-    private String shipInfo(int id) throws Exception {
-        return viewShipById(id).toString();
-    }
-
     // case 6
-    private String loadShipIntoPort(int id) throws Exception {
-        portService.TakeShip(port, viewShipById(id));
+    private String loadShipIntoPort() throws Exception {
+        portService.loadShip(port, getRandomShip());
         return "The ship is successfully loaded into the port";
     }
 }

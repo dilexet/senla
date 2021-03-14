@@ -2,25 +2,29 @@ package com.senla.service.implementation;
 
 import com.senla.entity.Port;
 import com.senla.entity.Ship;
+import com.senla.enums.ShipState;
 import com.senla.service.IPortService;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class PortService implements IPortService {
 
-    public Collection<Ship> getShips(Port port) {
+    public ArrayList<Ship> getShips(Port port) {
         return port.getShips();
     }
 
-    public Collection<Ship> getExpectedShips(Port port) {
+    public ArrayList<Ship> getExpectedShips(Port port) {
         return port.getExpectedShips();
     }
 
-    public void TakeShip(Port port, Ship ship) throws Exception {
+    public void loadShip(Port port, Ship ship) throws Exception {
         if ((long) port.getShips().size() >= 10) {
+            ship.setShipState(ShipState.WAITING);
             port.getExpectedShips().add(ship);
             throw new Exception("The port is full");
         } else {
+            ship.setShipState(ShipState.LOADED);
             port.getShips().add(ship);
             var water = port.getWaterVolume();
             water += new ShipService().unloadShip(ship);
@@ -32,12 +36,13 @@ public class PortService implements IPortService {
         return port.getWaterVolume();
     }
 
-    public void RemoveShip(Port port, int id) {
+    public void removeShip(Port port) {
+        Random random = new Random();
         try {
-            var ship = getShips(port).stream().filter(x -> x.getId() == id).findFirst();
-            if (ship.isEmpty()) {
+            var ship = getShips(port).get(random.nextInt(getShips(port).size() - 1));
+            if (ship == null) {
                 throw new Exception("Ship not found");
-            } else if (!port.getShips().remove(ship.get())) {
+            } else if (!port.getShips().remove(ship)) {
                 throw new Exception("Error when removing a ship from port");
             } else {
                 var item = port.getExpectedShips().stream().findFirst();
